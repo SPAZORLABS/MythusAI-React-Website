@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, ReactNode } from 'react';
-import { CallSheetData, createEmptyCallSheet, CallSheetSchema } from '@/types/callSheet';
+import { CallSheetData, createEmptyCallSheet } from '@/types/callSheet';
 
 type CallSheetAction = 
   | { type: 'SET_FIELD'; path: string; value: any }
@@ -7,7 +7,9 @@ type CallSheetAction =
   | { type: 'REMOVE_ROW'; table: 'scenes' | 'cast' | 'featureJunior' | 'advanceSchedule'; index: number }
   | { type: 'LOAD_DATA'; data: CallSheetData }
   | { type: 'RESET' }
-  | { type: 'AUTOFILL_PRODUCTION_INFO'; productionInfo: any };
+  | { type: 'AUTOFILL_PRODUCTION_INFO'; productionInfo: any }
+  | { type: 'AUTOFILL_SCENE_DETAILS'; sceneDetails: any }
+  | { type: 'SET_SCENE_OPTIONS'; sceneOptions: any[] };
 
 interface CallSheetContextType {
   data: CallSheetData;
@@ -113,19 +115,17 @@ function callSheetReducer(state: CallSheetData, action: CallSheetAction): CallSh
       const sceneDetails = action.sceneDetails;
       return {
         ...state,
-        // Autofill scene details
-        sceneNumber: sceneDetails?.scene_number || state.sceneNumber,
-        intExt: sceneDetails?.int_ext || state.intExt,
-        dayNight: sceneDetails?.day_night || state.dayNight,
-        location: sceneDetails?.location || state.location,
-        characters: sceneDetails?.characters || state.characters,
-        synopsis: sceneDetails?.synopsis || state.synopsis,
+        // Autofill scene details - using available CallSheet properties
+        shootLocation: sceneDetails?.location || state.shootLocation,
+        // Note: CallSheet doesn't have sceneNumber, intExt, dayNight, characters, synopsis properties
+        // These would need to be added to CallSheetSchema if needed
       };
       
     case 'SET_SCENE_OPTIONS':
       return {
         ...state,
-        sceneOptions: action.sceneOptions || [],
+        // Note: CallSheet doesn't have sceneOptions property
+        // This would need to be added to CallSheetSchema if needed
       };
       
     default:

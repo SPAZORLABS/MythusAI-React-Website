@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { X, ExternalLink, Download } from 'lucide-react';
 import { fileService } from '@/services/api/fileService';
-import { useAuth } from '@/auth/AuthProvider';
+import { useAuth } from '@/auth';
 
 interface PDFViewerProps {
   filename: string;
@@ -30,10 +30,21 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ filename, onClose, className }) =
       <div className="flex items-center justify-between p-3 border-b">
         <span className="font-medium text-sm truncate" title={filename}>{filename}</span>
         <div className="flex gap-2">
-          <Button variant="ghost" size="sm" title="Download" onClick={() => {
-            const baseURL = fileService["api"].defaults.baseURL;
-            const url = `${baseURL}/pdf/download/${filename}${effectiveToken ? `?token=${encodeURIComponent(effectiveToken)}` : ''}`;
-            window.open(url, '_blank');
+          <Button variant="ghost" size="sm" title="Download" onClick={async () => {
+            try {
+              // Use service to support both backend and mock mode
+              const blob = await fileService.downloadFile(filename);
+              const url = URL.createObjectURL(blob);
+              const a = document.createElement('a');
+              a.href = url;
+              a.download = filename;
+              document.body.appendChild(a);
+              a.click();
+              a.remove();
+              URL.revokeObjectURL(url);
+            } catch (err) {
+              console.error('Download failed:', err);
+            }
           }}>
             <Download className="w-4 h-4" />
           </Button>

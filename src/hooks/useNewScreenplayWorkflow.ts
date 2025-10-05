@@ -14,9 +14,20 @@ export const useNewScreenplayWorkflow = () => {
   }, [dispatch])
 
   const createScreenplayWithProductionInfo = useCallback(async (productionInfo: ProductionInfo) => {
+    // Ensure a screenplay exists; if missing, create it now using the current title
     if (!state.screenplayId) {
-      dispatch({ type: 'SET_ERROR', payload: { field: 'productionInfo', message: 'No screenplay found. Please create screenplay first.' } })
-      return false
+      try {
+        const createResp = await screenplayService.createScreenplay(state.title.trim())
+        if (createResp?.success && createResp.screenplay_id) {
+          dispatch({ type: 'SET_SCREENPLAY_ID', payload: createResp.screenplay_id })
+        } else {
+          dispatch({ type: 'SET_ERROR', payload: { field: 'productionInfo', message: 'Failed to create screenplay' } })
+          return false
+        }
+      } catch (e: any) {
+        dispatch({ type: 'SET_ERROR', payload: { field: 'productionInfo', message: e.message || 'Failed to create screenplay' } })
+        return false
+      }
     }
 
     dispatch({ type: 'SET_CREATING_SCREENPLAY', payload: true })
@@ -35,7 +46,8 @@ export const useNewScreenplayWorkflow = () => {
         dispatch({ type: 'SET_PRODUCTION_INFO', payload: productionResponse.data })
         dispatch({ type: 'SET_SUCCESS', payload: { field: 'productionInfo', message: 'Production information saved successfully!' } })
         
-        dispatch({ type: 'SET_CURRENT_STEP', payload: 3 })
+        // Move to Step 2: Upload Script
+        dispatch({ type: 'SET_CURRENT_STEP', payload: 2 })
         dispatch({ type: 'SET_ACTIVE_TAB', payload: 'upload' })
         
         return true
@@ -43,7 +55,8 @@ export const useNewScreenplayWorkflow = () => {
         dispatch({ type: 'SET_PRODUCTION_INFO', payload: productionInfoWithTitle })
         dispatch({ type: 'SET_SUCCESS', payload: { field: 'productionInfo', message: 'Production info saved locally. Will sync when possible.' } })
         
-        dispatch({ type: 'SET_CURRENT_STEP', payload: 3 })
+        // Move to Step 2: Upload Script
+        dispatch({ type: 'SET_CURRENT_STEP', payload: 2 })
         dispatch({ type: 'SET_ACTIVE_TAB', payload: 'upload' })
         
         return true
@@ -98,7 +111,15 @@ export const useNewScreenplayWorkflow = () => {
         }
         
         dispatch({ type: 'SET_SCREENPLAY_ID', payload: response.screenplay_id })
-        dispatch({ type: 'SET_CURRENT_STEP', payload: 4 })
+        // Populate scenes into NewScreenplay state when available
+        if (response.scenes && Array.isArray(response.scenes) && response.scenes.length > 0) {
+          // Response scenes already match our Scene type in mock/dev
+          // Use them directly to enable completion flow
+          // @ts-ignore
+          dispatch({ type: 'SET_SCENES', payload: response.scenes })
+        }
+        // Move to Step 3: Review Scenes
+        dispatch({ type: 'SET_CURRENT_STEP', payload: 3 })
         dispatch({ type: 'SET_ACTIVE_TAB', payload: 'scenes' })
         
         return true
@@ -120,13 +141,15 @@ export const useNewScreenplayWorkflow = () => {
       return
     }
     
-    dispatch({ type: 'SET_CURRENT_STEP', payload: 4 })
+    // Move to Step 3: Review Scenes
+    dispatch({ type: 'SET_CURRENT_STEP', payload: 3 })
     dispatch({ type: 'SET_ACTIVE_TAB', payload: 'scenes' })
   }, [state.screenplayId, dispatch])
 
   // Complete setup
   const completeSetup = useCallback(() => {
-    dispatch({ type: 'SET_CURRENT_STEP', payload: 5 })
+    // Move to Step 4: Complete
+    dispatch({ type: 'SET_CURRENT_STEP', payload: 4 })
     dispatch({ type: 'SET_SHOW_SUCCESS', payload: true })
     dispatch({ type: 'SET_ACTIVE_TAB', payload: 'complete' })
   }, [dispatch])
@@ -158,9 +181,9 @@ export const useNewScreenplayWorkflow = () => {
     dispatch, // Export dispatch for direct state updates
     
     // Computed values
-    canProceedToUpload: !!state.screenplayId && !!state.title && (state.productionInfo.company_name || state.productionInfo.director_name),
+    canProceedToUpload: !!state.screenplayId && !!state.title && !!state.productionInfo.genre && (state.productionInfo.company_name || state.productionInfo.director_name),
     hasValidTitle: !!state.title.trim(),
-    hasProductionInfo: !!(state.productionInfo.company_name || state.productionInfo.director_name),
+    hasProductionInfo: !!(state.productionInfo.genre && (state.productionInfo.company_name || state.productionInfo.director_name)),
     isReady: !!state.screenplayId && !!state.title
   }
 }

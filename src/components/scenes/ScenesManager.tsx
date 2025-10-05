@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useCallback, memo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ScenesProvider, useScenes } from '@/contexts/ScenesContext';
+import { ScenesProvider } from '@/contexts/ScenesContext';
+import { useScenes } from '@/contexts/ScenesContextBase';
 import { useScenesOperations, useScenesStats } from '@/hooks/useScenesOperations';
 import PageHeader from '@/components/layout/PageHeader';
 import ScenesContent from './ScenesContent';

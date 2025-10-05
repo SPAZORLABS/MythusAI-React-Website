@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, Mail, RefreshCw, CheckCircle } from 'lucide-react';
 import { emailVerificationService } from '@/services/api/emailVerificationService';
-import { useAuth } from '@/auth/AuthProvider';
+import { useAuth } from '@/auth';
 
 interface EmailVerificationProps {
   email: string;

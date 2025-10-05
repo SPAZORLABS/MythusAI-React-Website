@@ -8,6 +8,7 @@ import axios from 'axios';
 import started from 'electron-squirrel-startup';
 import { AuthDeepLinkHandler } from '../services/authDeepLink';
 import { TokenStorageService } from '../services/tokenStorage';
+import { setupDeepLinking } from './deeplink';
 
 type Provider = 'openai' | 'gemini';
 type UseCase = 'screenplay' | 'scene' | 'chat';
@@ -334,6 +335,9 @@ function createWindow() {
 
 // App lifecycle
 setupIPC();
+
+// Initialize deep linking before app is ready
+setupDeepLinking();
 
 app.whenReady().then(async () => {
   createSplashScreen();

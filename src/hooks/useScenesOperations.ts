@@ -1,5 +1,5 @@
 import { useCallback } from 'react';
-import { useScenes } from '@/contexts/ScenesContext';
+import { useScenes } from '@/contexts/ScenesContextBase';
 
 // Hook for scene operations (search, filter, sort, view mode)
 export const useScenesOperations = () => {

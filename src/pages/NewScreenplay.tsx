@@ -32,7 +32,7 @@ const NewScreenplayContent = ({ className, onToggleSidebar }: NewScreenplayProps
   }
 
   return (
-    <div className={cn("min-h-screen bg-white", className)}>
+    <div className={cn("min-h-screen bg-black text-white", className)}>
       {/* Header */}
       <NewScreenplayHeader screenplayId={state.screenplayId} onToggleSidebar={onToggleSidebar} />
       

@@ -1,7 +1,7 @@
 import React from 'react';
 import { User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { useAuth } from '@/auth/AuthProvider';
+import { useAuth } from '@/auth';
 
 const ProfileSettings: React.FC = () => {
   const { user } = useAuth();

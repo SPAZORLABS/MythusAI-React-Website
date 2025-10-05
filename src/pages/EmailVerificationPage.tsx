@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
-import { useAuth } from '@/auth/AuthProvider';
+import { useAuth } from '@/auth';
 import { useTheme } from '@/components/theme/theme-provider';
 import EmailVerification from '@/components/auth/EmailVerification';
 import { ArrowLeft } from 'lucide-react';

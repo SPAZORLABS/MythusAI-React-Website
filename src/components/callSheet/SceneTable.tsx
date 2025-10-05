@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { useCallSheet } from '@/contexts/CallSheetContext';
-import { useScenes } from '@/contexts/ScenesContext';
+import { useScenes } from '@/contexts/ScenesContextBase';
 import { TextField, SelectField } from './Field';
 
 interface SceneTableProps {

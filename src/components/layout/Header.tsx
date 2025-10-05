@@ -1,6 +1,6 @@
 import React from 'react';
 import { Film, HelpCircle, Settings, Menu } from 'lucide-react';
-import { useProject } from '@/contexts/ProjectContext';
+import { useWebProject } from '@/contexts/WebProjectContext';
 import { Button } from '@/components/ui/button';
 
 interface HeaderProps {
@@ -8,7 +8,7 @@ interface HeaderProps {
 }
 
 const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
-  const { currentProject } = useProject();
+  const { currentProject } = useWebProject();
   
   return (
     <header className="bg-background border-b border-border h-16 flex items-center px-6 justify-between">
@@ -52,4 +52,4 @@ const Header: React.FC<HeaderProps> = ({ onToggleSidebar }) => {
   );
 };
 
-export default Header; 
+export default Header;

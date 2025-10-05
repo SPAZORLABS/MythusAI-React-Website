@@ -427,11 +427,20 @@ const FileManager: React.FC<FileManagerProps> = ({
               </ContextMenuItem>
 
               <ContextMenuItem
-                onClick={() => {
-                  window.open(
-                    `${fileService["api"].defaults.baseURL}/pdf/download/${file.filename}`,
-                    "_blank"
-                  );
+                onClick={async () => {
+                  try {
+                    const blob = await fileService.downloadFile(file.filename);
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = file.filename;
+                    document.body.appendChild(a);
+                    a.click();
+                    a.remove();
+                    URL.revokeObjectURL(url);
+                  } catch (err) {
+                    console.error('Download failed:', err);
+                  }
                 }}
                 className="gap-2"
               >

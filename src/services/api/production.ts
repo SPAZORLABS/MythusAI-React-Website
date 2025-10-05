@@ -40,7 +40,23 @@ export interface ColumnAddRequest {
 class ProductionService {
     private api = axiosClient;
 
+    private shouldMock(error?: any): boolean {
+        const mockEnabled = import.meta.env.VITE_MOCK_API === 'true';
+        if (mockEnabled) return true;
+        const msg = String(error?.message || '');
+        return /ECONNREFUSED|ERR_NETWORK|Network Error/i.test(msg);
+    }
+
     async createProductionInfo(screenplayId: string, productionInfo: ProductionInfo): Promise<ProductionInfoResponseWrapper> {
+        if (this.shouldMock()) {
+            const mockId = `pi-${Date.now()}`;
+            const data: ProductionInfoResponse = {
+                id: mockId,
+                screenplay_id: screenplayId,
+                ...productionInfo
+            };
+            return { success: true, data, message: 'Mock production info saved' };
+        }
         const response = await this.api.post<ProductionInfoResponseWrapper>(`/production-info/${screenplayId}`, productionInfo);
         return response.data;
     }
@@ -51,6 +67,40 @@ class ProductionService {
     }
 
     async getProductionInfo(screenplayId: string): Promise<ProductionInfoResponseWrapper> {
+        if (this.shouldMock()) {
+            const data: ProductionInfoResponse = {
+                id: `pi-${screenplayId}`,
+                screenplay_id: screenplayId,
+                // Minimal default mock values
+                company_name: 'Demo Productions',
+                production_number: 'DP-001',
+                title: 'Demo Screenplay',
+                company_address: '123 Demo St',
+                genre: 'Drama',
+                production_status: 'Pre-Production',
+                shoot_start_date: new Date().toISOString(),
+                shoot_end_date: new Date(Date.now() + 7*24*3600*1000).toISOString(),
+                director_name: 'Jane Doe',
+                assistant_director: '',
+                producer_name: '',
+                dop_name: '',
+                camera_operator: '',
+                editor_name: '',
+                sound_engineer: '',
+                art_director: '',
+                production_designer: '',
+                gaffer: '',
+                wardrobe_department: '',
+                makeup_hair_department: '',
+                action_director: '',
+                stunt_coordinator: '',
+                vfx_supervisor: '',
+                colorist: '',
+                music_director: '',
+                // Add any optional fields as empty defaults
+            } as ProductionInfoResponse;
+            return { success: true, data };
+        }
         const response = await this.api.get<ProductionInfoResponseWrapper>(`/production-info/${screenplayId}`);
         return response.data;
     }

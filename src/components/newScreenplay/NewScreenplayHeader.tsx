@@ -10,7 +10,7 @@ interface NewScreenplayHeaderProps {
 
 const NewScreenplayHeader: React.FC<NewScreenplayHeaderProps> = ({ screenplayId, onToggleSidebar }) => {
   return (
-    <div className="border-b bg-secondary">
+    <div className="border-b bg-black text-white">
       <div className="container mx-auto px-6 py-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-3">
@@ -29,7 +29,7 @@ const NewScreenplayHeader: React.FC<NewScreenplayHeaderProps> = ({ screenplayId,
         </div>
             <div>
               <h1 className="text-3xl font-bold">New Screenplay Setup</h1>
-              <p className="text-muted-foreground">
+              <p className="text-white">
                 Create a new screenplay with production details and script processing
               </p>
             </div>

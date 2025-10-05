@@ -5,8 +5,8 @@ import { createPortal } from 'react-dom';
 interface PopoverContextType {
   isOpen: boolean;
   setIsOpen: (open: boolean) => void;
-  triggerRef: React.RefObject<HTMLElement>;
-  contentRef: React.RefObject<HTMLDivElement>;
+  triggerRef: React.RefObject<HTMLElement | null>;
+  contentRef: React.RefObject<HTMLDivElement | null>;
 }
 
 const PopoverContext = createContext<PopoverContextType | undefined>(undefined);
@@ -21,7 +21,7 @@ const usePopover = () => {
 
 // Click outside hook
 const useClickOutside = (
-  ref: React.RefObject<HTMLElement>,
+  ref: React.RefObject<HTMLElement | null>,
   handler: () => void,
   enabled: boolean = true
 ) => {

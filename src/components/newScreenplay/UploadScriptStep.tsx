@@ -20,7 +20,7 @@ const UploadScriptStep: React.FC = () => {
   const [selectedMethod, setSelectedMethod] = useState<'pdf' | 'manual' | null>(null)
   
   return (
-    <Card className="poppins-text bg-white border border-border rounded-2xl">
+    <Card className="poppins-text bg-black text-white border border-border rounded-2xl">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Upload className="h-5 w-5" />
@@ -35,7 +35,7 @@ const UploadScriptStep: React.FC = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {/* PDF Processing Option */}
               <Card 
-                className={`cursor-pointer transition-all duration-200 hover:shadow-md border border-border rounded-2xl ${
+                className={`cursor-pointer transition-all duration-200 hover:shadow-md border border-border rounded-2xl bg-black text-white ${
                   selectedMethod === 'pdf' 
                     ? 'ring-2 ring-primary border-primary' 
                     : 'hover:border-primary/50'
@@ -44,15 +44,15 @@ const UploadScriptStep: React.FC = () => {
               >
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="p-2 bg-blue-100 dark:bg-blue-900/30 rounded-lg">
-                      <FileText className="h-6 w-6 text-blue-600 dark:text-blue-400" />
+                    <div className="p-2 bg-black rounded-lg border border-blue-800">
+                      <FileText className="h-6 w-6 text-blue-400" />
                     </div>
                     <div>
                       <h4 className="font-semibold">Process PDF Script</h4>
-                      <p className="text-sm text-muted-foreground">Upload and extract scenes automatically</p>
+                      <p className="text-sm text-white">Upload and extract scenes automatically</p>
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-white">
                     Upload a PDF screenplay and our AI will automatically extract and organize scenes for you.
                   </p>
                 </CardContent>
@@ -60,7 +60,7 @@ const UploadScriptStep: React.FC = () => {
 
               {/* Manual Creation Option */}
               <Card 
-                className={`cursor-pointer transition-all duration-200 hover:shadow-md border border-border rounded-2xl ${
+                className={`cursor-pointer transition-all duration-200 hover:shadow-md border border-border rounded-2xl bg-black text-white ${
                   selectedMethod === 'manual' 
                     ? 'ring-2 ring-primary border-primary' 
                     : 'hover:border-primary/50'
@@ -69,15 +69,15 @@ const UploadScriptStep: React.FC = () => {
               >
                 <CardContent className="p-6">
                   <div className="flex items-center gap-3 mb-3">
-                    <div className="p-2 bg-green-100 dark:bg-green-900/30 rounded-lg">
-                      <Scissors className="h-6 w-6 text-green-600 dark:text-green-400" />
+                    <div className="p-2 bg-black rounded-lg border border-green-800">
+                      <Scissors className="h-6 w-6 text-green-400" />
                     </div>
                     <div>
                       <h4 className="font-semibold">Create Manually</h4>
-                      <p className="text-sm text-muted-foreground">Build scenes from scratch</p>
+                      <p className="text-sm text-white">Build scenes from scratch</p>
                     </div>
                   </div>
-                  <p className="text-sm text-muted-foreground">
+                  <p className="text-sm text-white">
                     Create scenes manually with full control over structure, characters, and content.
                   </p>
                 </CardContent>
@@ -126,7 +126,7 @@ const UploadScriptStep: React.FC = () => {
                 {/* PDF Preview */}
                 {state.selectedFile && (
                   <div className="space-y-3">
-                    <h4 className="text-sm font-medium text-muted-foreground">PDF Preview</h4>
+                    <h4 className="text-sm font-medium text-white">PDF Preview</h4>
                     <PDFViewer 
                       filename={state.selectedFile} 
                       onClose={() => selectFile('')} 
@@ -160,21 +160,21 @@ const UploadScriptStep: React.FC = () => {
 
                     {/* Processing Status */}
                     {state.isProcessingFile && (
-                      <Alert>
+                      <Alert className="bg-black text-white border border-border">
                         <Loader2 className="h-4 w-4 animate-spin" />
                         <AlertDescription>{state.processingStep}</AlertDescription>
                       </Alert>
                     )}
 
                     {state.errors.fileProcessing && (
-                      <Alert variant="destructive">
+                      <Alert variant="destructive" className="bg-black text-red-400 border border-red-600">
                         <AlertCircle className="h-4 w-4" />
                         <AlertDescription>{state.errors.fileProcessing}</AlertDescription>
                       </Alert>
                     )}
 
                     {state.success.fileProcessing && (
-                      <Alert className="border-green-200 bg-green-50 text-green-800">
+                      <Alert className="border-green-600 bg-black text-green-400">
                         <CheckCircle2 className="h-4 w-4" />
                         <AlertDescription>{state.success.fileProcessing}</AlertDescription>
                       </Alert>
@@ -202,17 +202,17 @@ const UploadScriptStep: React.FC = () => {
                   </Button>
                 </div>
                 
-                <div className="p-6 bg-green-50 dark:bg-green-950/20 rounded-lg border border-green-200 dark:border-green-800">
+                <div className="p-6 bg-black rounded-lg border border-green-800">
                   <div className="flex items-start gap-3">
-                    <Scissors className="h-5 w-5 text-green-600 mt-0.5" />
+                    <Scissors className="h-5 w-5 text-green-400 mt-0.5" />
                     <div>
-                      <h4 className="font-medium text-green-900 dark:text-green-100 mb-2">
+                      <h4 className="font-medium text-green-400 mb-2">
                         Create Scenes Manually
                       </h4>
-                      <p className="text-sm text-green-700 dark:text-green-300 mb-3">
+                      <p className="text-sm text-green-300 mb-3">
                         Build your screenplay scene by scene with full control over:
                       </p>
-                      <ul className="text-sm text-green-700 dark:text-green-300 space-y-1">
+                      <ul className="text-sm text-green-300 space-y-1">
                         <li>• Scene headings and locations</li>
                         <li>• Character dialogue and actions</li>
                         <li>• Scene transitions and formatting</li>

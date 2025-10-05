@@ -5,7 +5,8 @@ export { default as ScenesListView } from '../ScenesListView';
 export { default as SceneDetailPanel } from '../SceneDetailPanel';
 
 // Context and hooks
-export { ScenesProvider, useScenes } from '@/contexts/ScenesContext';
+export { ScenesProvider } from '@/contexts/ScenesContext';
+export { useScenes } from '@/contexts/ScenesContextBase';
 export { 
   useScenesOperations, 
   useScenesStats, 

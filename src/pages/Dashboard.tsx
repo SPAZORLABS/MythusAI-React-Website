@@ -66,7 +66,18 @@ const Dashboard: React.FC<DashboardProps> = ({
       setScreenplays(data);
     } catch (error) {
       console.error('Failed to load screenplays:', error);
-      setScreenplaysError('Failed to load screenplays. Please try again.');
+      // Fallback to demo data in web/dev mode
+      if (import.meta.env.VITE_MOCK_API === 'true') {
+        const now = new Date().toISOString();
+        const demo = [
+          { id: 'sp-1', title: 'Demo Screenplay', filename: 'demo.pdf', created_at: now, scene_count: 12 },
+          { id: 'sp-2', title: 'Sample Script', filename: 'sample.pdf', created_at: now, scene_count: 8 },
+        ] as Screenplay[];
+        setScreenplays(demo);
+        setScreenplaysError(null);
+      } else {
+        setScreenplaysError('Failed to load screenplays. Please try again.');
+      }
     } finally {
       setScreenplaysLoading(false);
     }

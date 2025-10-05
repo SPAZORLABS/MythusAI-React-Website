@@ -4,13 +4,13 @@ import AIModelsHeader from '../components/AIModelsHeader';
 import APIKeysSection from '../components/APIKeysSection';
 import ModelConfigSection from '../components/ModelConfigSection';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { useLLMSettings } from '@/hooks/useLLMSettings';
+import { useWebLLMSettings } from '@/hooks/useWebLLMSettings';
 import { llmConfigService } from '@/services/api/llmConfigService';
 import { LLMModels, LLMConfig } from '../types';
 import { LLMSettings } from '@/types/electron';
 
 const AIModelsSettings: React.FC = () => {
-  const { settings, loading, save, setApiKey, getApiKey } = useLLMSettings();
+  const { settings, loading, save, setApiKey, getApiKey } = useWebLLMSettings();
   const [availableModels, setAvailableModels] = React.useState<LLMModels | null>(null);
   const [isLoadingModels, setIsLoadingModels] = React.useState(false);
   const [isTestingApiKey, setIsTestingApiKey] = React.useState<string | null>(null);

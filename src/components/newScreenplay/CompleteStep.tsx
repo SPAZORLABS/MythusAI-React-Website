@@ -15,7 +15,9 @@ const CompleteStep = () => {
   const [summarizationComplete, setSummarizationComplete] = useState(false)
   const { showLoading, updateToast } = useToastHelper()
 
-  const isComplete = !!state.screenplayId && !!state.title && state.scenes.length > 0
+  // Consider setup complete once screenplay and title exist; scenes are
+  // managed in ScenesContext and may not be mirrored here.
+  const isComplete = !!state.screenplayId && !!state.title
 
   const startSummarization = useCallback(async () => {
     if (!state.screenplayId) return
@@ -67,7 +69,7 @@ const CompleteStep = () => {
   }, [state.showSuccess, state.screenplayId, summarizationComplete, startSummarization])
 
   return (
-    <Card>
+    <Card className="poppins-text bg-black text-white border border-border rounded-2xl">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <CheckCircle2 className="h-5 w-5" />
@@ -77,20 +79,20 @@ const CompleteStep = () => {
       <CardContent>
         {isComplete ? (
           <div className="text-center py-12">
-            <div className="w-20 h-20 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
+            <div className="w-20 h-20 bg-black border border-green-700 rounded-full flex items-center justify-center mx-auto mb-6">
               <CheckCircle2 className="h-10 w-10 text-green-600" />
             </div>
 
-            <h2 className="text-2xl font-bold text-green-900 dark:text-green-100 mb-4">
+            <h2 className="text-2xl font-bold text-white mb-4">
               Screenplay Setup Complete!
             </h2>
 
-            <p className="text-muted-foreground mb-6 max-w-md mx-auto">
+            <p className="text-white mb-6 max-w-md mx-auto">
               Your screenplay "{state.title}" has been successfully created with all production information and scenes.
             </p>
 
             <div className="space-y-4 max-w-md mx-auto">
-              <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+              <div className="flex items-center justify-between p-3 bg-black border border-border rounded-lg">
                 <span className="text-sm font-medium">Screenplay ID:</span>
                 <Badge variant="outline" className="font-mono">
                   {state.screenplayId}
@@ -98,7 +100,7 @@ const CompleteStep = () => {
               </div>
 
               {hasProductionInfo && (
-                <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                <div className="flex items-center justify-between p-3 bg-black border border-border rounded-lg">
                   <span className="text-sm font-medium">Production Info:</span>
                   <Badge variant="default" className="bg-green-600">
                     <CheckCircle2 className="h-3 w-3 mr-1" />
@@ -107,7 +109,7 @@ const CompleteStep = () => {
                 </div>
               )}
 
-              <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+              <div className="flex items-center justify-between p-3 bg-black border border-border rounded-lg">
                 <span className="text-sm font-medium">AI Analysis:</span>
                 {isSummarizing ? (
                   <Badge variant="outline" className="bg-blue-50">
@@ -159,9 +161,9 @@ const CompleteStep = () => {
             </div>
           </div>
         ) : (
-          <div className="text-center py-8">
+          <div className="text-center py-8 bg-black text-white">
             <Loader2 className="h-8 w-8 animate-spin text-primary mx-auto mb-4" />
-            <p className="text-muted-foreground">Completing setup...</p>
+            <p className="text-white">Completing setup...</p>
           </div>
         )}
       </CardContent>

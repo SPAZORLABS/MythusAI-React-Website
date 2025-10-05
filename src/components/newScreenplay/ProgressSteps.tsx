@@ -29,7 +29,7 @@ const ProgressSteps: React.FC<ProgressStepsProps> = ({ steps, currentStep }) => 
           )
           const connectorClasses = cn(
             'w-px flex-1',
-            isDone ? 'bg-primary' : 'bg-muted'
+            isDone ? 'bg-primary' : 'bg-black'
           )
 
           return (
@@ -44,12 +44,12 @@ const ProgressSteps: React.FC<ProgressStepsProps> = ({ steps, currentStep }) => 
               <div className="pt-0.5 min-w-0">
                 <p className={cn(
                   'text-sm font-medium',
-                  isDone || isActive ? 'text-foreground' : 'text-muted-foreground',
+                  isDone || isActive ? 'text-foreground' : 'text-white',
                   'line-clamp-1'
                 )}>
                   {step.title}
                 </p>
-                <p className="text-xs text-muted-foreground line-clamp-2">
+                <p className="text-xs text-white line-clamp-2">
                   {step.description}
                 </p>
               </div>
@@ -77,17 +77,17 @@ const ProgressSteps: React.FC<ProgressStepsProps> = ({ steps, currentStep }) => 
               </div>
 
               <div className="ml-3 min-w-0">
-                <p className={cn('text-sm font-medium truncate', isDone || isActive ? 'text-foreground' : 'text-muted-foreground')}>
+                <p className={cn('text-sm font-medium truncate', isDone || isActive ? 'text-foreground' : 'text-white')}>
                   {step.title}
                 </p>
-                <p className="text-xs text-muted-foreground line-clamp-2">
+                <p className="text-xs text-white line-clamp-2">
                   {step.description}
                 </p>
               </div>
 
               {index < steps.length - 1 && (
                 <ArrowRight
-                  className={cn('mx-4 h-4 w-4 flex-shrink-0', isDone ? 'text-primary' : 'text-muted-foreground')}
+                  className={cn('mx-4 h-4 w-4 flex-shrink-0', isDone ? 'text-primary' : 'text-white')}
                   aria-hidden
                 />
               )}

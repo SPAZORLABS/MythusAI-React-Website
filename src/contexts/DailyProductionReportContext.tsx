@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useReducer, ReactNode } from 'react';
-import { DailyProductionReportData, createEmptyDailyProductionReport, DailyProductionReportSchema } from '@/types/dailyProductionReport';
+import { DailyProductionReportData, createEmptyDailyProductionReport } from '@/types/dailyProductionReport';
 
 type DailyProductionReportAction = 
   | { type: 'SET_FIELD'; path: string; value: any }
@@ -43,7 +43,7 @@ function setNestedValue(obj: any, path: string, value: any): any {
   const lastArrayMatch = lastKey.match(/^(.+)\[(\d+)\]$/);
   
   if (lastArrayMatch) {
-    const [, arrayKey, index] = arrayMatch;
+    const [, arrayKey, index] = lastArrayMatch;
     const idx = parseInt(index);
     if (!current[arrayKey]) current[arrayKey] = [];
     current[arrayKey] = [...current[arrayKey]];

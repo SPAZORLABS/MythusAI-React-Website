@@ -1,7 +1,11 @@
 // src/lib/axiosClient.ts (or wherever this file is)
 import axios from 'axios';
 
-const API_BASE = import.meta.env.VITE_API_BASE || 'http://127.0.0.1:8765';
+// Use provided Railway backend by default; allow override via VITE_API_BASE
+const DEFAULT_BACKEND = 'https://mythusai-python-backend-production.up.railway.app';
+const API_BASE = typeof import.meta !== 'undefined'
+  ? (import.meta.env.VITE_API_BASE ?? DEFAULT_BACKEND)
+  : DEFAULT_BACKEND;
 
 // Create axios instance
 const axiosClient = axios.create({
@@ -11,16 +15,14 @@ const axiosClient = axios.create({
   },
 });
 
-// ✅ Request interceptor - get token from Electron
+// ✅ Request interceptor - get token from localStorage
 axiosClient.interceptors.request.use(
   async (config: any) => {
     try {
-      // ✅ Get token from Electron secure storage
-      if (window.electron?.auth) {
-        const token = await window.electron.auth.getToken();
-        if (token && config.headers) {
-          config.headers.Authorization = `Bearer ${token}`;
-        }
+      // ✅ Get token from localStorage
+      const token = localStorage.getItem('auth_token');
+      if (token && config.headers) {
+        config.headers.Authorization = `Bearer ${token}`;
       }
     } catch (error) {
       console.error('Failed to get token for request:', error);
@@ -46,10 +48,8 @@ axiosClient.interceptors.response.use(
 
       console.error('❌ Token expired or invalid (401)');
 
-      // ✅ Logout user via Electron
-      if (window.electron?.auth) {
-        await window.electron.auth.logout();
-      }
+      // ✅ Remove token from localStorage
+      localStorage.removeItem('auth_token');
 
       // Redirect to login
       window.location.href = '/login';

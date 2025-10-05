@@ -1,6 +1,6 @@
 // src/auth/ProtectedRoute.tsx
 import { Navigate } from 'react-router-dom';
-import { useAuth } from './AuthProvider';
+import { useAuth } from '@/auth';
 import { Loader2 } from 'lucide-react';
 
 interface ProtectedRouteProps {

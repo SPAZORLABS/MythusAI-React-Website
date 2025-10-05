@@ -9,7 +9,7 @@ import { useNewScreenplayWorkflow } from '@/hooks/useNewScreenplayWorkflow'
 const ScenesReviewStep: React.FC = () => {
   const { state, completeSetup } = useNewScreenplayWorkflow()
   return (
-    <Card className="poppins-text bg-white border border-border rounded-2xl">
+    <Card className="poppins-text bg-black text-white border border-border rounded-2xl">
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <Scissors className="h-5 w-5" />
@@ -21,7 +21,7 @@ const ScenesReviewStep: React.FC = () => {
           <div className="space-y-6">
             {/* Production Info Summary */}
             {state.productionInfo && (
-              <div className="p-4 bg-muted/30 rounded-lg border border-border">
+              <div className="p-4 bg-black rounded-lg border border-border">
                 <h4 className="font-medium mb-3">Production Information</h4>
                 <ProductionInfoViewer 
                   productionInfo={state.productionInfo}
@@ -31,8 +31,8 @@ const ScenesReviewStep: React.FC = () => {
             )}
 
             {/* Scenes Manager */}
-            <div className="h-[800px] min-h-0 flex flex-col border border-border rounded-2xl">
-              <div className="flex-1 min-h-0 p-4">
+            <div className="h-[800px] min-h-0 flex flex-col border border-border rounded-2xl bg-black text-white">
+              <div className="flex-1 min-h-0 p-4 bg-black">
                 <ScenesManager screenplayId={state.screenplayId} />
               </div>
             </div>
@@ -50,8 +50,8 @@ const ScenesReviewStep: React.FC = () => {
             </div>
           </div>
         ) : (
-          <div className="text-center py-8">
-            <p className="text-muted-foreground">
+          <div className="text-center py-8 bg-black text-white">
+            <p className="text-white">
               No screenplay created yet. Please complete the previous steps first.
             </p>
           </div>

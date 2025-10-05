@@ -1,6 +1,7 @@
-import React, { createContext, useContext, useReducer, useCallback, useMemo, useEffect, ReactNode } from 'react';
+import React, { useReducer, useCallback, useMemo, useEffect, ReactNode } from 'react';
 import { scenesService, Scene, SceneDetail } from '@/services/api/scenesService';
 import { masterBreakdownService, MasterBreakdownResponse } from '@/services/api/masterBreakdownService';
+import { ScenesContext } from './ScenesContextBase';
 
 // Types
 export interface ScenesState {
@@ -170,7 +171,7 @@ interface ScenesContextType {
   sortedScenes: Scene[];
 }
 
-const ScenesContext = createContext<ScenesContextType | undefined>(undefined);
+// Context is provided by ScenesContextBase to keep this file component-only
 
 // Provider component
 interface ScenesProviderProps {
@@ -591,12 +592,4 @@ export const ScenesProvider: React.FC<ScenesProviderProps> = ({ children, screen
 };
 
 // Custom hook to use the context
-export const useScenes = (): ScenesContextType => {
-  const context = useContext(ScenesContext);
-  if (context === undefined) {
-    throw new Error('useScenes must be used within a ScenesProvider');
-  }
-  return context;
-};
-
-export default ScenesContext;
+// Intentionally no non-component exports to satisfy React Fast Refresh

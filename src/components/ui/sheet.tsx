@@ -409,7 +409,7 @@ const SheetClose = React.forwardRef<HTMLButtonElement, SheetCloseProps>(
         ...props,
         ...(children.props || {}),
         onClick: (e: React.MouseEvent<Element, MouseEvent>) => {
-          children.props?.onClick?.(e)
+          (children.props as any)?.onClick?.(e)
           props.onClick?.(e as React.MouseEvent<HTMLButtonElement, MouseEvent>)
         }
       } as any)

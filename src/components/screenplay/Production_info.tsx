@@ -97,7 +97,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
     itemCount?: number
   }> = ({ title, icon, isExpanded, onToggle, itemCount }) => (
     <CardHeader 
-      className="bg-gradient-to-r from-secondary to-secondary/80 cursor-pointer hover:from-secondary/90 hover:to-secondary/70 transition-all duration-200 rounded-t-lg"
+      className="bg-black cursor-pointer transition-all duration-200 rounded-t-lg"
       onClick={onToggle}
     >
       <CardTitle className="flex items-center justify-between text-foreground">
@@ -143,16 +143,16 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
   }
 
   return (
-    <div className={cn("space-y-8 bg-gradient-to-br from-background to-secondary/20 p-6 rounded-xl bg-secondary", className)}>
+    <div className={cn("space-y-8 bg-black p-6 rounded-xl", className)}>
       {/* Header */}
-      <div className="flex items-center justify-between bg-white/80 backdrop-blur-sm p-6 rounded-xl shadow-sm border border-border/50">
+      <div className="flex items-center justify-between bg-black p-6 rounded-xl shadow-sm border border-border/50 text-white">
         <div className="flex items-center space-x-4">
           <div className="p-3 bg-primary/10 rounded-full">
             <Film className="h-8 w-8 text-primary" />
           </div>
           <div>
-            <h2 className="text-3xl font-bold text-foreground">Production Information</h2>
-            <p className="text-sm text-muted-foreground mt-1">
+            <h2 className="text-3xl font-bold text-white">Production Information</h2>
+            <p className="text-sm text-white mt-1">
               Manage your film's production details and crew information
             </p>
           </div>
@@ -218,7 +218,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
       {/* Production Info Form */}
       <div className="space-y-6">
         {/* Progress Indicator */}
-        <div className="bg-white/80 backdrop-blur-sm p-4 rounded-lg border border-border/50">
+        <div className="bg-black p-4 rounded-lg border border-border">
           <div className="flex items-center justify-between text-sm text-muted-foreground">
             <span>Complete your production information</span>
             <span className="text-xs bg-primary/10 text-primary px-2 py-1 rounded-full">
@@ -238,7 +238,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
               itemCount={2}
             />
             {expandedSections.basic && (
-              <CardContent className="space-y-6 bg-white/50 p-6">
+              <CardContent className="space-y-6 bg-black p-6 text-white">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <RequiredLabel required>Genre</RequiredLabel>
@@ -247,7 +247,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('genre', e.target.value)}
                       placeholder="e.g., Drama, Comedy, Action, Thriller"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -258,7 +258,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('production_status', e.target.value)}
                       placeholder="e.g., Pre-production, In Production, Post-production"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
                 </div>
@@ -276,7 +276,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
               itemCount={4}
             />
             {expandedSections.company && (
-              <CardContent className="space-y-6 bg-white/50 p-6">
+              <CardContent className="space-y-6 bg-black p-6 text-white">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <RequiredLabel required>Company Name</RequiredLabel>
@@ -285,7 +285,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('company_name', e.target.value)}
                       placeholder="Enter production company name"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -296,7 +296,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('production_number', e.target.value)}
                       placeholder="Enter unique production number"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -307,7 +307,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('title', e.target.value)}
                       placeholder="Enter film/project title"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -318,7 +318,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('company_address', e.target.value)}
                       placeholder="Enter company address"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
                 </div>
@@ -336,7 +336,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
               itemCount={8}
             />
             {expandedSections.personnel && (
-              <CardContent className="space-y-6 bg-white/50 p-6">
+              <CardContent className="space-y-6 bg-black p-6 text-white">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <RequiredLabel required>Director</RequiredLabel>
@@ -345,7 +345,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('director_name', e.target.value)}
                       placeholder="Enter director's full name"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -356,7 +356,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('line_producer_name', e.target.value)}
                       placeholder="Enter line producer's name"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -367,7 +367,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateArrayField('producer_names', e.target.value)}
                       placeholder="Producer 1, Producer 2, Producer 3 (comma-separated)"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                     <p className="text-xs text-muted-foreground">Separate multiple names with commas</p>
                   </div>
@@ -379,7 +379,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateArrayField('writer_names', e.target.value)}
                       placeholder="Writer 1, Writer 2, Writer 3 (comma-separated)"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                     <p className="text-xs text-muted-foreground">Separate multiple names with commas</p>
                   </div>
@@ -391,7 +391,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('executive_producer', e.target.value)}
                       placeholder="Enter executive producer's name"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -402,7 +402,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('unit_production_manager', e.target.value)}
                       placeholder="Enter UPM's name"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -413,7 +413,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('production_accountant', e.target.value)}
                       placeholder="Enter production accountant's name"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -424,7 +424,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateArrayField('assistant_directors', e.target.value)}
                       placeholder="1st AD, 2nd AD, 3rd AD (comma-separated)"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                     <p className="text-xs text-muted-foreground">Separate multiple names with commas</p>
                   </div>
@@ -443,7 +443,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
               itemCount={6}
             />
             {expandedSections.technical && (
-              <CardContent className="space-y-6 bg-white/50 p-6">
+              <CardContent className="space-y-6 bg-black p-6 text-white">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <RequiredLabel>Director of Photography</RequiredLabel>
@@ -452,7 +452,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('director_of_photography', e.target.value)}
                       placeholder="Enter DOP's name"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -463,7 +463,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('first_assistant_camera', e.target.value)}
                       placeholder="Enter 1st AC's name"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -474,7 +474,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('focus_puller_1', e.target.value)}
                       placeholder="Enter focus puller 1's name"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -485,7 +485,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('focus_puller_2', e.target.value)}
                       placeholder="Enter focus puller 2's name"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -496,7 +496,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('gaffer', e.target.value)}
                       placeholder="Enter gaffer's name"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -507,7 +507,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('on_set_editor', e.target.value)}
                       placeholder="Enter on-set editor's name"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
                 </div>
@@ -525,7 +525,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
               itemCount={4}
             />
             {expandedSections.art && (
-              <CardContent className="space-y-6 bg-white/50 p-6">
+              <CardContent className="space-y-6 bg-black p-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <RequiredLabel>Production Designer</RequiredLabel>
@@ -534,7 +534,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('production_designer', e.target.value)}
                       placeholder="Enter production designer's name"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -545,7 +545,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('art_director', e.target.value)}
                       placeholder="Enter art director's name"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -556,7 +556,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('assistant_art_director', e.target.value)}
                       placeholder="Enter assistant art director's name"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -567,7 +567,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('art_team', e.target.value)}
                       placeholder="Enter art team members"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
                 </div>
@@ -585,7 +585,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
               itemCount={5}
             />
             {expandedSections.other && (
-              <CardContent className="space-y-6 bg-white/50 p-6">
+              <CardContent className="space-y-6 bg-black p-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <RequiredLabel>Wardrobe Department</RequiredLabel>
@@ -594,7 +594,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('wardrobe_department', e.target.value)}
                       placeholder="Enter wardrobe department"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -605,7 +605,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('makeup_hair_department', e.target.value)}
                       placeholder="Enter makeup & hair department"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -616,7 +616,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('action_director', e.target.value)}
                       placeholder="Enter action director name"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -627,7 +627,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('direction_department', e.target.value)}
                       placeholder="Enter direction department"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -638,7 +638,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       onChange={(e) => updateField('production_team', e.target.value)}
                       placeholder="Enter production team"
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
                 </div>
@@ -656,7 +656,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
               itemCount={2}
             />
             {expandedSections.schedule && (
-              <CardContent className="space-y-6 bg-white/50 p-6">
+              <CardContent className="space-y-6 bg-black p-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="space-y-2">
                     <RequiredLabel>Shoot Start Date</RequiredLabel>
@@ -665,7 +665,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       value={productionInfo?.shoot_start_date || ''}
                       onChange={(e) => updateField('shoot_start_date', e.target.value)}
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
 
@@ -676,7 +676,7 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
                       value={productionInfo?.shoot_end_date || ''}
                       onChange={(e) => updateField('shoot_end_date', e.target.value)}
                       disabled={!isEditing}
-                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors"
+                      className="px-4 py-3 rounded-lg border-border/50 focus:border-primary transition-colors bg-black text-white"
                     />
                   </div>
                 </div>
@@ -703,14 +703,14 @@ export const Production_info: React.FC<ProductionInfoProps> = ({
 
       {/* Summary View (when not editing) */}
       {!isEditing && hasExistingData && (
-        <Card className="bg-secondary">
-          <CardHeader className="bg-secondary">
+        <Card className="bg-black">
+          <CardHeader className="bg-black">
             <CardTitle className="flex items-center gap-2">
               <PlayCircle className="h-5 w-5" />
               Production Summary
             </CardTitle>
           </CardHeader>
-          <CardContent className="bg-secondary">
+          <CardContent className="bg-black">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {productionInfo?.company_name && (
                 <div className="space-y-1">

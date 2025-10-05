@@ -27,7 +27,7 @@ export function TooltipProvider({
   const [isOpen, setIsOpen] = useState(false);
   const [showTimeout, setShowTimeout] = useState<NodeJS.Timeout | null>(null);
   const [hideTimeout, setHideTimeout] = useState<NodeJS.Timeout | null>(null);
-  const [triggerElement, setTriggerElement] = useState<HTMLElement | null>(null);
+  const [, setTriggerElement] = useState<HTMLElement | null>(null);
 
   const handleMouseEnter = () => {
     if (hideTimeout) {
