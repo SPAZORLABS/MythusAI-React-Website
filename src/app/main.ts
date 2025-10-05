@@ -122,7 +122,7 @@ async function startBackend(): Promise<void> {
   const backendPath = path.join(
     process.resourcesPath,
     'backend',
-    process.platform === 'win32' ? 'mythusai-backend.exe' : 'mythusai-backend'
+    process.platform === 'win32' ? 'main.exe' : 'main'
   );
 
   try {
