@@ -1,8 +1,8 @@
 import React from 'react';
-import { RefreshCw, FileText, Plus, Loader2, Home, FolderOpen } from 'lucide-react';
+import { RefreshCw, FileText, Plus, Loader2, Home, FolderOpen, Settings } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Screenplay } from '@/services/api/screenplayService';
-import Settings from '@/components/settings/settings';
+
 import { ModeToggle } from '@/components/theme/mode-toggle';
 import ScreenplayListItem from './ScreenplayListItem';
 import { motion, AnimatePresence, Variants } from 'framer-motion';
@@ -32,6 +32,7 @@ interface ExpandedSidebarContentProps {
   truncateTitle: (title: string, maxLength?: number) => string;
   onFileManagerOpen?: () => void;
   onSidebarClose?: () => void;
+  onSettingsOpen?: () => void;
 }
 
 const ExpandedSidebarContent: React.FC<ExpandedSidebarContentProps> = ({
@@ -48,7 +49,8 @@ const ExpandedSidebarContent: React.FC<ExpandedSidebarContentProps> = ({
   onScroll,
   truncateTitle,
   onFileManagerOpen,
-  onSidebarClose
+  onSidebarClose,
+  onSettingsOpen
 }) => {
   const navigate = useNavigate();
   
@@ -250,8 +252,24 @@ const ExpandedSidebarContent: React.FC<ExpandedSidebarContentProps> = ({
             Files
           </Button>
           
-          <Settings />
-          <ModeToggle />
+          {/* Settings Navigation */}
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => {
+              if (onSettingsOpen) {
+                onSettingsOpen();
+              } 
+              if (onSidebarClose) {
+                onSidebarClose();
+              }
+            }}
+            className="w-full justify-start gap-2 h-9 text-sm font-medium"
+          >
+            <Settings className="h-4 w-4" />
+            Settings
+          </Button>          
+            <ModeToggle />
         </div>
       </div>
     </>

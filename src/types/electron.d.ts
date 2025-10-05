@@ -15,5 +15,32 @@ export interface ElectronAPI {
 declare global {
   interface Window {
     electron: ElectronAPI;
+    settings: {
+      getLLMSettings: () => Promise<LLMSettings>;
+      setLLMSettings: (next: Partial<LLMSettings>) => Promise<LLMSettings>;
+    };
+    secrets: {
+      setApiKey: (provider: 'openai' | 'gemini', apiKey: string) => Promise<boolean>;
+      getApiKey: (provider: 'openai' | 'gemini') => Promise<string | null>;
+    };
   }
+}
+
+type Provider = 'openai' | 'gemini';
+type UseCase = 'screenplay' | 'scene' | 'chat';
+
+interface LLMConfig {
+  provider: Provider;
+  model_name: string;
+  temperature: number;
+  timeout: number;
+  top_p?: number | null;
+  api_key: string | null;
+}
+
+interface LLMSettings {
+  screenplay: LLMConfig;
+  scene: LLMConfig;
+  chat: LLMConfig;
+  apiKeys: Record<Provider, string>;
 }

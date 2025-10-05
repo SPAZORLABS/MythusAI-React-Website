@@ -1,3 +1,5 @@
+import Store from 'electron-store';
+import { safeStorage } from 'electron';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { spawn, ChildProcess } from 'child_process';
 import path from 'node:path';
@@ -6,6 +8,58 @@ import axios from 'axios';
 import started from 'electron-squirrel-startup';
 import { AuthDeepLinkHandler } from '../services/authDeepLink';
 import { TokenStorageService } from '../services/tokenStorage';
+
+type Provider = 'openai' | 'gemini';
+type UseCase = 'screenplay' | 'scene' | 'chat';
+
+interface LLMConfig {
+  provider: Provider;
+  model_name: string;
+  temperature: number;
+  timeout: number;
+  top_p?: number | null;
+  api_key?: string | null;
+}
+
+interface LLMSettings {
+  screenplay: LLMConfig;
+  scene: LLMConfig;
+  chat: LLMConfig;
+}
+
+// Defaults
+const defaultSettings: LLMSettings = {
+  screenplay: { provider: 'openai', model_name: 'gpt-4o-mini', temperature: 0.5, timeout: 30, top_p: null },
+  scene:      { provider: 'openai', model_name: 'gpt-4o-mini', temperature: 0.5, timeout: 30, top_p: null },
+  chat:       { provider: 'openai', model_name: 'gpt-4o-mini', temperature: 0.5, timeout: 30, top_p: null },
+};
+
+// Stores
+const settingsStore = new Store<LLMSettings>({ name: 'llm-settings', defaults: defaultSettings });
+const secretsStore  = new Store<Record<string, string>>({ name: 'llm-secrets' }); // encrypted values only
+
+function setApiKey(provider: Provider, apiKey: string) {
+  if (safeStorage.isEncryptionAvailable()) {
+    const encrypted = safeStorage.encryptString(apiKey).toString('latin1');
+    secretsStore.set(provider, encrypted);
+  } else {
+    // fallback obfuscation
+    secretsStore.set(provider, Buffer.from(apiKey, 'utf8').toString('base64'));
+  }
+}
+
+function getApiKey(provider: Provider): string | null {
+  const raw = secretsStore.get(provider);
+  if (!raw) return null;
+  try {
+    if (safeStorage.isEncryptionAvailable()) {
+      return safeStorage.decryptString(Buffer.from(raw, 'latin1'));
+    }
+    return Buffer.from(raw, 'base64').toString('utf8');
+  } catch {
+    return null;
+  }
+}
 
 declare const MAIN_WINDOW_VITE_DEV_SERVER_URL: string;
 declare const MAIN_WINDOW_VITE_NAME: string;
@@ -208,6 +262,33 @@ function setupIPC() {
 
   ipcMain.handle('backend:check', async () => ({ ready: backendReady, url: BACKEND_URL }));
   ipcMain.handle('backend:url', () => BACKEND_URL);
+
+  ipcMain.handle('settings:getLLMSettings', () => {
+    return settingsStore.store;
+  });
+
+  ipcMain.handle('settings:setLLMSettings', (_e, next: Partial<LLMSettings>) => {
+    // shallow merge per top-level use-case
+    const merged: LLMSettings = {
+      ...settingsStore.store,
+      ...next,
+      screenplay: { ...settingsStore.store.screenplay, ...(next as any).screenplay },
+      scene:      { ...settingsStore.store.scene,      ...(next as any).scene },
+      chat:       { ...settingsStore.store.chat,       ...(next as any).chat },
+    };
+    settingsStore.store = merged;
+    return merged;
+  });
+
+  // Secrets handlers
+  ipcMain.handle('secrets:setApiKey', (_e, provider: Provider, apiKey: string) => {
+    setApiKey(provider, apiKey);
+    return true;
+  });
+
+  ipcMain.handle('secrets:getApiKey', (_e, provider: Provider) => {
+    return getApiKey(provider);
+  });
 }
 
 // Window

@@ -16,6 +16,7 @@ import NewScreenplay from '../pages/NewScreenplay';
 import { Screenplay } from '../services/api/screenplayService';
 import { useElectronAuth } from '@/hooks/useElectronAuth';
 import { Loader2 } from 'lucide-react';
+import SettingsModal from '@/components/settings/SettingsModal';
 
 const AppContent: React.FC = () => {
   const { isAuthenticated, isLoading } = useElectronAuth();
@@ -25,6 +26,7 @@ const AppContent: React.FC = () => {
   const [selectedScreenplay, setSelectedScreenplay] = useState<Screenplay | null>(null);
   const [showFileManager, setShowFileManager] = useState(false);
   const [sidebarVisible, setSidebarVisible] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const handleToggleSidebar = () => {
     setSidebarVisible(!sidebarVisible);
@@ -117,6 +119,7 @@ const AppContent: React.FC = () => {
               onToggleCollapse={handleToggleSidebar}
               onFileManagerOpen={handleFileManagerOpen}
               onSidebarClose={() => setSidebarVisible(false)}
+              onSettingsOpen={() => setSettingsOpen(!settingsOpen)}
             />
           </div>
         </>
@@ -139,6 +142,7 @@ const AppContent: React.FC = () => {
                 onToggleSidebar={handleToggleSidebar}
                 onScreenplaySelect={handleScreenplaySelect}
                 onFileManagerOpen={handleFileManagerOpen}
+                onSettingsOpen={() => setSettingsOpen(!settingsOpen)}
               />
             </ProtectedRoute>
           } />
@@ -214,6 +218,11 @@ const AppContent: React.FC = () => {
             isOpen={showFileManager}
             onOpenChange={setShowFileManager}
           />
+        )}
+        {settingsOpen && (
+          <SettingsModal isOpen={settingsOpen} onClose={() => setSettingsOpen(false)}>
+            {/* your settings content */}
+          </SettingsModal>
         )}
       </main>
     </div>

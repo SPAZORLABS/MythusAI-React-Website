@@ -101,26 +101,21 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onReady }) => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <div className="fixed inset-0 flex items-center justify-center">
       <div className="text-center space-y-8 max-w-md px-6">
         {/* App Logo/Name */}
         <div className="space-y-2">
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          <h1 className="text-5xl font-bold bg-clip-text text-transparent">
             MythusAI
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 text-sm">
+          <p className="">
             Screenplay Production Management
           </p>
         </div>
 
-        {/* Status Icon */}
-        <div className="flex justify-center">
-          {getStatusIcon()}
-        </div>
-
         {/* Status Message */}
         <div className="space-y-4">
-          <p className="text-lg font-medium text-gray-700 dark:text-gray-300">
+          <p className="text-lg font-medium">
             {statusMessage}
           </p>
 
@@ -136,7 +131,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onReady }) => {
 
           {/* Backend Status Indicator */}
           {status !== 'error' && (
-            <div className="flex items-center justify-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+            <div className="flex items-center justify-center gap-2 text-sm ">
               <Server className="h-4 w-4" />
               <span>
                 {status === 'backend-ready' || status === 'checking-auth' || status === 'ready'
@@ -152,7 +147,7 @@ const LoadingScreen: React.FC<LoadingScreenProps> = ({ onReady }) => {
               <Button 
                 onClick={handleLogin} 
                 size="lg" 
-                className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"
+                className="w-full "
               >
                 <ExternalLink className="mr-2 h-4 w-4" />
                 Sign in with MythusAI

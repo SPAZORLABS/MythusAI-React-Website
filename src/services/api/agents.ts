@@ -1,4 +1,5 @@
 import axiosClient from '@/api/axiosClient';
+import { promises } from 'dns';
 
 export interface SummarizeResponse {
   success: boolean;
@@ -52,13 +53,33 @@ export interface AutofillSceneResponse {
   errors: any[];
 }
 
-class AgentsService {
+function mapUseCase(screenplayCall: boolean): 'screenplay' | 'scene' {
+  return screenplayCall ? 'screenplay' : 'scene';
+}
+
+async function buildLLMConfigFor(useCase: 'screenplay' | 'scene' | 'chat') {
+  const settings = await window.settings.getLLMSettings();
+  const cfg = settings[useCase];
+  const apiKey = await window.secrets.getApiKey(cfg.provider);
+  return {
+    provider: cfg.provider,
+    model_name: cfg.model_name,
+    temperature: cfg.temperature,
+    top_p: cfg.top_p ?? null,
+    timeout: cfg.timeout,
+    api_key: apiKey ?? null,
+  };
+}
+
+export class AgentsService {
   private api = axiosClient;
 
   async summarizeScreenplay(screenplay_id: string, force_refresh: boolean): Promise<SummarizeResponse> {
+    const LLMConfig = await buildLLMConfigFor('screenplay');
     const response = await this.api.post(`/agents/screenplay/summarize`, {
       screenplay_id,
       force_refresh,
+      LLMConfig,
     });
     return response.data as SummarizeResponse;
   }
@@ -75,15 +96,16 @@ class AgentsService {
     }
   }
 
-
   async autofillScene(screenplay_id: string, scene_id: string, skip_human_review: boolean): Promise<AutofillSceneResponse> {
+    const LLMConfig = await buildLLMConfigFor('scene');
     const response = await this.api.post(`/agents/scene/autofill`, {
       screenplay_id,
       scene_id,
       skip_human_review,
+      LLMConfig,
     });
     return response.data as AutofillSceneResponse;
   }
 }
 
-export const agentsService = new AgentsService(); 
+export const agentsService = new AgentsService();

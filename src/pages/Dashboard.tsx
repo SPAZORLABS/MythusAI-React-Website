@@ -17,6 +17,7 @@ import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { cn } from '@/lib/utils';
+import { onSettingsOpen } from '@/components/settings/SettingsModal';
 import ChatInterface from '@/components/dashboard/ChatInterface';
 import ScreenplayList from '@/components/dashboard/ScreenplayList';
 import { screenplayService, Screenplay } from '@/services/api/screenplayService';
@@ -26,13 +27,15 @@ interface DashboardProps {
   onToggleSidebar?: () => void;
   onScreenplaySelect?: (screenplay: Screenplay) => void;
   onFileManagerOpen?: () => void;
+  onSettingsOpen?: () => void;
 }
 
 const Dashboard: React.FC<DashboardProps> = ({ 
   selectedScreenplay, 
   onToggleSidebar,
   onScreenplaySelect,
-  onFileManagerOpen
+  onFileManagerOpen,
+  onSettingsOpen
 }) => {
   const navigate = useNavigate();
   
@@ -69,32 +72,6 @@ const Dashboard: React.FC<DashboardProps> = ({
     }
   };
 
-  const handleCreateProject = async () => {
-    if (!newProjectName.trim()) return;
-    
-    try {
-      setIsCreatingProject(true);
-      
-      // Create screenplay using the service
-      await screenplayService.createScreenplay({
-        title: newProjectName.trim(),
-        description: newProjectDescription.trim()
-      });
-      
-      // Refresh screenplays list
-      await loadScreenplays();
-      
-      // Reset form and close modal
-      setNewProjectName('');
-      setNewProjectDescription('');
-      setShowNewProjectModal(false);
-    } catch (error) {
-      console.error('Failed to create project:', error);
-    } finally {
-      setIsCreatingProject(false);
-    }
-  };
-
   const handleChatFocus = () => {
     setIsChatMode(true);
   };
@@ -106,12 +83,6 @@ const Dashboard: React.FC<DashboardProps> = ({
     // Open full chat interface
     setIsChatMode(true);
     setChatInput('');
-  };
-
-  const handleSettings = () => {
-    // Navigate to settings page or open settings modal
-    console.log('Opening settings...');
-    // TODO: Implement settings navigation
   };
 
   const handleFileManagement = () => {
@@ -237,7 +208,7 @@ const Dashboard: React.FC<DashboardProps> = ({
               <Button
                 variant="outline"
                 size="lg"
-                onClick={handleSettings}
+                onClick={onSettingsOpen}
                 className="flex items-center gap-2 h-12 px-6"
               >
                 <Settings className="h-5 w-5" />

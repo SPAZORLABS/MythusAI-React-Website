@@ -85,16 +85,16 @@ export function Toolbar({ callSheetRef }: ToolbarProps) {
   };
 
   return (
-    <div className="fixed top-4 right-4 bg-white shadow-lg rounded-lg p-4 border screen-only z-50">
+    <div className="absolute top-4 right-4 bg-white shadow-lg rounded-lg p-4 border screen-only z-50">
       <div className="flex flex-col gap-2">
         <h3 className="font-bold text-sm">Call Sheet Tools</h3>
         
-        <button
+        {/* <button
           onClick={handlePrint}
           className="bg-blue-500 text-white px-3 py-2 text-sm rounded hover:bg-secondary"
         >
           Print
-        </button>
+        </button> */}
         
         <button
           onClick={exportPdf}
@@ -104,14 +104,14 @@ export function Toolbar({ callSheetRef }: ToolbarProps) {
           {pdfBusy ? 'Exporting PDF...' : 'Export PDF'}
         </button>
         
-        <button
+        {/* <button
           onClick={handleExportJSON}
           className="bg-blue-500 text-white px-3 py-2 text-sm rounded hover:bg-secondary"
         >
           Export JSON
-        </button>
+        </button> */}
         
-        <div>
+        {/* <div>
           <input
             type="file"
             ref={fileInputRef}
@@ -126,7 +126,7 @@ export function Toolbar({ callSheetRef }: ToolbarProps) {
           >
             Import JSON
           </label>
-        </div>
+        </div> */}
         
         <button
           onClick={handleReset}

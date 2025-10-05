@@ -1,3 +1,4 @@
+import { LLMSettings } from '@/types/electron';
 import { contextBridge, ipcRenderer } from 'electron';
 
 contextBridge.exposeInMainWorld('electron', {
@@ -38,4 +39,14 @@ contextBridge.exposeInMainWorld('electron', {
       ipcRenderer.on('backend-error', (_, error) => callback(error));
     },
   },
+});
+
+contextBridge.exposeInMainWorld('settings', {
+  getLLMSettings: () => ipcRenderer.invoke('settings:getLLMSettings'),
+  setLLMSettings: (next: Partial<LLMSettings>) => ipcRenderer.invoke('settings:setLLMSettings', next),
+});
+
+contextBridge.exposeInMainWorld('secrets', {
+  setApiKey: (provider: 'openai' | 'gemini', apiKey: string) => ipcRenderer.invoke('secrets:setApiKey', provider, apiKey),
+  getApiKey: (provider: 'openai' | 'gemini') => ipcRenderer.invoke('secrets:getApiKey', provider),
 });

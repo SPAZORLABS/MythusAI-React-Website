@@ -575,14 +575,14 @@ const ScenesTableView: React.FC<ScenesTableViewProps> = ({
         
         {/* Export Buttons */}
         <div className="flex items-center gap-2">
-          <button
+          {/* <button
             onClick={handleExportCSV}
             className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
             title="Export all data to CSV"
           >
             <FileText className="h-4 w-4" />
             Export CSV
-          </button>
+          </button> */}
           <button
             onClick={handleExportExcel}
             className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
@@ -591,14 +591,14 @@ const ScenesTableView: React.FC<ScenesTableViewProps> = ({
             <FileSpreadsheet className="h-4 w-4" />
             Export Excel
           </button>
-          <button
+          {/* <button
             onClick={handleExportVisibleCSV}
             className="inline-flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-blue-700 bg-blue-50 border border-blue-300 rounded-md hover:bg-blue-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors duration-200"
             title="Export filtered/visible data to CSV"
           >
             <Download className="h-4 w-4" />
             Export Filtered CSV
-          </button>
+          </button> */}
         </div>
       </div>
 

@@ -7,6 +7,8 @@ import { CheckCircle2, RefreshCw, Film, Loader2, Brain } from 'lucide-react'
 import { agentsService } from '@/services/api/agents'
 import { useNewScreenplayWorkflow } from '@/hooks/useNewScreenplayWorkflow'
 
+const POLL_INTERVAL = 3000 // 3s
+
 const CompleteStep = () => {
   const { state, hasProductionInfo, resetWorkflow } = useNewScreenplayWorkflow()
   const [isSummarizing, setIsSummarizing] = useState(false)
@@ -19,45 +21,51 @@ const CompleteStep = () => {
     if (!state.screenplayId) return
 
     setIsSummarizing(true)
-    
-    // Show loading toast
+    setSummarizationComplete(false)
+
     const toastId = showLoading(
       'Processing Screenplay',
       'Generating AI summary and analysis...'
     )
 
     try {
-      const response = await agentsService.summarizeScreenplay(state.screenplayId, false)
-      
-      if (response.success) {
-        // Update toast to success
-        updateToast(toastId, {
-          type: 'success',
-          title: 'Screenplay Summary Complete',
-          description: 'AI analysis has been generated successfully!'
-        })
-        setSummarizationComplete(true)
-      } else {
-        throw new Error(response.message || 'Failed to generate summary')
+      // Kick off summarization job
+      await agentsService.summarizeScreenplay(state.screenplayId, false)
+
+      // Poll until backend says complete
+      let done = false
+      while (!done) {
+        const status = await agentsService.getSummaryStatus(state.screenplayId)
+        if (status.hasExistingSummary) {
+          done = true
+          updateToast(toastId, {
+            type: 'success',
+            title: 'Screenplay Summary Complete',
+            description: 'AI analysis has been generated successfully!'
+          })
+          setSummarizationComplete(true)
+        } else {
+          await new Promise(res => setTimeout(res, POLL_INTERVAL))
+        }
       }
-    } catch (error: unknown) {
-      // Update toast to error
+    } catch (error: any) {
       updateToast(toastId, {
         type: 'error',
         title: 'Summarization Failed',
-        description: error instanceof Error ? error.message : 'Failed to generate screenplay summary'
+        description: error.message || 'Failed to generate screenplay summary'
       })
     } finally {
       setIsSummarizing(false)
     }
   }, [state.screenplayId, showLoading, updateToast])
 
-  // Start summarization when the component shows success
+  // Auto start only once after setup complete
   useEffect(() => {
-    if (state.showSuccess && state.screenplayId && !isSummarizing && !summarizationComplete) {
+    if (state.showSuccess && state.screenplayId && !summarizationComplete) {
       startSummarization()
     }
-  }, [state.showSuccess, state.screenplayId, isSummarizing, summarizationComplete, startSummarization])
+  }, [state.showSuccess, state.screenplayId, summarizationComplete, startSummarization])
+
   return (
     <Card>
       <CardHeader>
@@ -72,11 +80,11 @@ const CompleteStep = () => {
             <div className="w-20 h-20 bg-green-100 dark:bg-green-900/20 rounded-full flex items-center justify-center mx-auto mb-6">
               <CheckCircle2 className="h-10 w-10 text-green-600" />
             </div>
-            
+
             <h2 className="text-2xl font-bold text-green-900 dark:text-green-100 mb-4">
               Screenplay Setup Complete!
             </h2>
-            
+
             <p className="text-muted-foreground mb-6 max-w-md mx-auto">
               Your screenplay "{state.title}" has been successfully created with all production information and scenes.
             </p>
@@ -88,7 +96,7 @@ const CompleteStep = () => {
                   {state.screenplayId}
                 </Badge>
               </div>
-              
+
               {hasProductionInfo && (
                 <div className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
                   <span className="text-sm font-medium">Production Info:</span>
@@ -140,9 +148,9 @@ const CompleteStep = () => {
                   Generate Summary
                 </Button>
               )}
-              
+
               <Button
-                onClick={() => window.location.href = '/dashboard'}
+                onClick={() => (window.location.href = '/dashboard')}
                 className="gap-2"
               >
                 <Film className="h-4 w-4" />

@@ -12,6 +12,7 @@ interface ScreenplaySidebarProps {
   onToggleCollapse?: () => void;
   onFileManagerOpen?: () => void;
   onSidebarClose?: () => void;
+  onSettingsOpen?: () => void;
 }
 
 const ScreenplaySidebar: React.FC<ScreenplaySidebarProps> = ({
@@ -19,7 +20,8 @@ const ScreenplaySidebar: React.FC<ScreenplaySidebarProps> = ({
   selectedScreenplayId,
   onToggleCollapse,
   onFileManagerOpen,
-  onSidebarClose
+  onSidebarClose,
+  onSettingsOpen
 }) => {
   const [screenplays, setScreenplays] = useState<Screenplay[]>([]);
   const [loading, setLoading] = useState(false);
@@ -228,6 +230,7 @@ const ScreenplaySidebar: React.FC<ScreenplaySidebarProps> = ({
           truncateTitle={truncateTitle}
           onFileManagerOpen={onFileManagerOpen}
           onSidebarClose={onSidebarClose}
+          onSettingsOpen={onSettingsOpen}
         />
       </motion.div>
 

@@ -129,7 +129,7 @@ const ScenesListView: React.FC<ScenesListViewProps> = ({
       className={`h-full overflow-y-auto overflow-x-hidden poppins-text ${className}`}
     >
       <div className="p-2">
-        <div className="space-y-0">
+        <div className="space-y-2">
           {renderedScenes}
         </div>
         
