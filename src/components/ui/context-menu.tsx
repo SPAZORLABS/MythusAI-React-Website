@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 
 export interface ContextMenuProps {
   children: React.ReactNode
-  trigger: React.ReactNode
+  trigger?: React.ReactNode
   className?: string
 }
 

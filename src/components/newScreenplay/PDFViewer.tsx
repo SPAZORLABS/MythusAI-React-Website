@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo } from 'react';
 import { Button } from '@/components/ui/button';
 import { X, ExternalLink, Download } from 'lucide-react';
 import { fileService } from '@/services/api/fileService';
-import { useAuth } from '@/auth';
+import { useWebAuth } from '@/hooks/useWebAuth';
 
 interface PDFViewerProps {
   filename: string;
@@ -11,7 +11,7 @@ interface PDFViewerProps {
 }
 
 const PDFViewer: React.FC<PDFViewerProps> = ({ filename, onClose, className }) => {
-  const { accessToken } = useAuth();
+  const { accessToken } = useWebAuth();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const effectiveToken = accessToken || (window as any).__getAccessToken?.();
@@ -25,9 +25,9 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ filename, onClose, className }) =
   }, [pdfUrl]);
 
   return (
-    <div className={`w-full min-h-[600px] flex flex-col bg-white border rounded-xl shadow ${className || ''}`}>
+    <div className={`w-full min-h-[600px] flex flex-col bg-black text-white border border-border rounded-xl shadow ${className || ''}`}>
       {/* Header */}
-      <div className="flex items-center justify-between p-3 border-b">
+      <div className="flex items-center justify-between p-3 border-b border-border">
         <span className="font-medium text-sm truncate" title={filename}>{filename}</span>
         <div className="flex gap-2">
           <Button variant="ghost" size="sm" title="Download" onClick={async () => {
@@ -57,15 +57,15 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ filename, onClose, className }) =
         </div>
       </div>
       {/* PDF Content */}
-      <div className="flex-1 relative bg-gray-50 flex items-center justify-center" style={{ minHeight: '500px' }}>
+      <div className="flex-1 relative bg-black flex items-center justify-center" style={{ minHeight: '500px' }}>
         {loading && !error && (
-          <div className="absolute inset-0 flex items-center justify-center bg-white/80 z-10">
-            <span className="text-xs text-gray-500">Loading PDF...</span>
+          <div className="absolute inset-0 flex items-center justify-center bg-black/60 z-10">
+            <span className="text-xs text-white/70">Loading PDF...</span>
           </div>
         )}
         {error ? (
           <div className="text-center">
-            <span className="text-red-500 text-sm">{error}</span>
+            <span className="text-red-400 text-sm">{error}</span>
             <Button variant="outline" size="sm" onClick={() => window.location.reload()}>Retry</Button>
           </div>
         ) : (
@@ -79,7 +79,7 @@ const PDFViewer: React.FC<PDFViewerProps> = ({ filename, onClose, className }) =
         )}
       </div>
       {/* Footer */}
-      <div className="p-2 border-t text-xs text-gray-400">PDF Preview</div>
+      <div className="p-2 border-t border-border text-xs text-white/60">PDF Preview</div>
     </div>
   );
 };
