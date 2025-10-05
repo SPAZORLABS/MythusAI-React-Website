@@ -1,0 +1,333 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'LibreBaskerville';
+  src: url('/LibreBaskerville-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  src: url('/Poppins-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.poppins-text {
+  font-family: 'Poppins', sans-serif;
+}
+
+@layer base {
+  :root {
+    /* Base */
+    --color-background: oklch(1 0 0); /* white */
+    --color-foreground: oklch(35.5% 0.046 236); /* ~ #1b263b readable on white */
+    
+    /* Surfaces */
+    --color-card: oklch(99% 0 0); /* near-white card */
+    --color-card-foreground: oklch(35.5% 0.046 236);
+    --color-popover: oklch(100% 0 0);
+    --color-popover-foreground: oklch(35.5% 0.046 236);
+    
+    /* Brand/action (primary = Yinmn Blue) */
+    --color-primary: oklch(58% 0.06 237); /* ~ #415a77 */
+    --color-primary-foreground: oklch(98% 0 0); /* near white over primary */
+    
+    /* Secondary UI (lighter blue chrome) */
+    --color-secondary: oklch(92% 0.02 235); /* subtle light blue surface */
+    --color-secondary-foreground: oklch(35.5% 0.046 236);
+    
+    /* Muted */
+    --color-muted: oklch(96% 0.012 235); /* light, almost gray-blue */
+    --color-muted-foreground: oklch(55% 0.02 236);/* subdued text */
+    
+    /* Accent (Silver Lake Blue) */
+    --color-accent: oklch(71% 0.055 236); /* ~ #778da9 */
+    --color-accent-foreground: oklch(20% 0.02 236);
+    
+    /* Inputs/borders/focus */
+    --color-border: oklch(88% 0.014 235); /* soft low-chroma blue */
+    --color-input: oklch(97% 0.01 235); /* input bg */
+    --color-ring: oklch(71% 0.055 236); /* accent ring for focus */
+    
+    /* Destructive */
+    --color-destructive: oklch(65% 0.23 25); /* warm red/orange */
+    --color-destructive-foreground: oklch(98% 0 0);
+    
+    /* Extras */
+    --scrollbar-thumb: oklch(88% 0.014 235);
+    --scrollbar-track: oklch(96% 0.012 235);
+    --radius: 0.625rem;
+    }
+
+  .dark {
+    --color-border: oklch(0.2 0 0);
+    --color-input: oklch(0.25 0 0);
+    --color-ring: oklch(0.6 0.2 250);
+    --color-background: oklch(0.1 0 0);
+    --color-foreground: oklch(0.95 0 0);
+    --color-card: oklch(0.15 0 0);
+    --color-card-foreground: oklch(0.95 0 0);
+    --color-popover: oklch(0.15 0 0);
+    --color-popover-foreground: oklch(0.95 0 0);
+    --color-primary: oklch(0.7 0.2 250);
+    --color-primary-foreground: oklch(0.1 0 0);
+    --color-secondary: oklch(0.2 0 0);
+    --color-secondary-foreground: oklch(0.9 0 0);
+    --color-muted: oklch(0.2 0 0);
+    --color-muted-foreground: oklch(0.6 0 0);
+    --color-accent: oklch(47.2% 0.0086 196.1);
+    --color-accent-foreground: oklch(0.9 0 0);
+    --color-destructive: oklch(0.7 0.25 25);
+    --color-destructive-foreground: oklch(0.95 0 0);
+    --scrollbar-thumb: oklch(0.3 0 0);
+    --scrollbar-track: oklch(0.2 0 0);
+  }
+
+  /* Ensure variables are applied to html element as well */
+  html {
+    --color-border: oklch(0.9 0 0);
+    --color-input: oklch(0.9 0 0);
+    --color-ring: oklch(0.6 0.2 250);
+    --color-background: oklch(1 0 0);
+    --color-foreground: oklch(0.1 0 0);
+    --color-card: oklch(1 0 0);
+    --color-card-foreground: oklch(0.1 0 0);
+    --color-popover: oklch(1 0 0);
+    --color-popover-foreground: oklch(0.1 0 0);
+    --color-primary: oklch(0.5 0.2 250);
+    --color-primary-foreground: oklch(0.98 0 0);
+    --color-secondary: oklch(0.96 0 0);
+    --color-secondary-foreground: oklch(0.2 0 0);
+    --color-muted: oklch(0.96 0 0);
+    --color-muted-foreground: oklch(0.5 0 0);
+    --color-accent: oklch(47.2% 0.0086 196.1);
+    --color-accent-foreground: oklch(0.2 0 0);
+    --color-destructive: oklch(0.6 0.25 25);
+    --color-destructive-foreground: oklch(0.98 0 0);
+    --radius: 0.625rem;
+    --scrollbar-thumb: oklch(0.8 0 0);
+    --scrollbar-track: oklch(0.9 0 0);
+  }
+
+  html.dark {
+    --color-border: #21241c;
+    --color-input: oklch(0.25 0 0);
+    --color-ring: oklch(0.6 0.2 250);
+    --color-background: #0d0e0b;
+    --color-foreground: oklch(0.95 0 0);
+    --color-card: oklch(0.15 0 0);
+    --color-card-foreground: oklch(0.95 0 0);
+    --color-popover: oklch(0.15 0 0);
+    --color-popover-foreground: oklch(0.95 0 0);
+    --color-primary: oklch(0.7 0.2 250);
+    --color-primary-foreground: oklch(0.1 0 0);
+    --color-secondary: oklch(0.2 0 0);
+    --color-secondary-foreground: oklch(0.9 0 0);
+    --color-muted: oklch(0.2 0 0);
+    --color-muted-foreground: oklch(0.6 0 0);
+    --color-accent: oklch(47.2% 0.0086 196.1);
+    --color-accent-foreground: oklch(0.9 0 0);
+    --color-destructive: oklch(0.7 0.25 25);
+    --color-destructive-foreground: oklch(0.95 0 0);
+    --scrollbar-thumb: oklch(0.3 0 0);
+    --scrollbar-track: oklch(0.2 0 0);
+  }
+
+  * {
+    border-color: var(--color-border);
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: 'LibreBaskerville', serif;
+  }
+
+  /* Ensure theme colors work properly */
+  .bg-background {
+    background-color: var(--color-background, #ffffff);
+  }
+
+  .bg-secondary {
+    background-color: var(--color-secondary, #ffffff);
+  }
+
+  .bg-primary {
+    background-color: var(--color-primary, #ffffff);
+  }
+
+  .text-foreground {
+    color: var(--color-foreground, #000000);
+  }
+
+  .text-primary {
+    color: var(--color-primary-foreground, #000000);
+  }
+
+  .text-secondary {
+    color: var(--color-secondary, #000000);
+  }
+
+  .bg-muted {
+    background-color: var(--color-muted, #ffffff);
+  }
+
+  .bg-popover {
+    background-color: var(--color-popover, #ffffff);
+  }
+
+  .bg-card {
+    background-color: var(--color-card, #ffffff);
+  }
+
+  .bg-accent {
+    background-color: var(--color-accent, #4e5e64);
+  }
+
+  .text-foreground {
+    color: var(--color-foreground, #000000);
+  }
+
+  .text-popover-foreground {
+    color: var(--color-popover-foreground, #000000);
+  }
+
+  .text-accent-foreground {
+    color: var(--color-accent-foreground, #000000);
+  }
+
+  .border-input {
+    border-color: var(--color-input, #d1d5db);
+  }
+
+  .border-border {
+    border-color: var(--color-border, #d1d5db);
+  }
+
+  .focus\:ring-primary:focus {
+    --tw-ring-color: var(--color-primary, #3b82f6);
+  }
+
+  .focus\:border-primary:focus {
+    border-color: var(--color-primary, #3b82f6);
+  }
+
+  .hover\:border-primary\/50:hover {
+    border-color: var(--color-primary, #3b82f6);
+    opacity: 0.5;
+  }
+
+  /* Custom font classes */
+  .poppins-text {
+    font-family: 'Poppins', sans-serif;
+  }
+
+  .font-print {
+    font-family: 'Poppins', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    font-feature-settings: 'tnum' 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* Ensure Headless UI components respect theme */
+  [data-headlessui-state] {
+    background-color: var(--color-background) !important;
+    color: var(--color-foreground) !important;
+  }
+
+  /* Specific override for Dialog.Panel in sheets */
+  [role="dialog"] {
+    background-color: var(--color-background) !important;
+    color: var(--color-foreground) !important;
+  }
+}
+
+/* Custom scrollbar styles */
+::-webkit-scrollbar {
+  width: 8px; 
+  height: 8px; 
+  background-color: transparent; 
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb); 
+  border-radius: 4px;
+  border: 1px solid var(--scrollbar-track); 
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--scrollbar-track); 
+}
+
+/* Call Sheet Print Styles */
+@layer utilities {
+  .print-only {
+    display: none;
+  }
+  
+  .screen-only {
+    display: block;
+  }
+}
+
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 0;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    background: white !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  
+  .print-only {
+    display: block !important;
+  }
+  
+  .screen-only {
+    display: none !important;
+  }
+  
+  .call-sheet-root {
+    transform: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    box-shadow: none !important;
+  }
+  /* Ensure form values render and do not clip in PDF */
+  .call-sheet-root input,
+  .call-sheet-root textarea,
+  .call-sheet-root select {
+    color: #000 !important;
+    -webkit-text-fill-color: #000 !important;
+    background: transparent !important;
+    border: 0 !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    line-height: 1.1rem !important;
+    white-space: pre-wrap !important;
+    word-break: break-word !important;
+    overflow: visible !important;
+  }
+  /* Improve table borders for crisp printing */
+  .call-sheet-root table {
+    border-collapse: collapse !important;
+    width: 100% !important;
+  }
+  .call-sheet-root table td,
+  .call-sheet-root table th {
+    border: 1px solid #000 !important;
+  }
+}
