@@ -71,13 +71,13 @@ const ScreenplayList: React.FC<ScreenplayListProps> = ({
             layoutId={`screenplay-${screenplay.id}`}
           >
             <Card 
-              className="cursor-pointer hover:shadow-md transition-all duration-200 hover:border-primary/20 group"
+              className="cursor-pointer hover:shadow-md transition-all duration-200 hover:border-primary/20 hover:scale-[99%] group"
               onClick={() => onScreenplaySelect(screenplay.id)}
             >
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
                   <div className="flex-1 min-w-0">
-                    <CardTitle className="text-base sm:text-lg truncate pr-2 group-hover:text-primary transition-colors">
+                    <CardTitle className="text-base sm:text-lg truncate pr-2 transition-colors">
                       {screenplay.title}
                     </CardTitle>
                     <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mt-2 text-sm text-muted-foreground">
@@ -93,7 +93,7 @@ const ScreenplayList: React.FC<ScreenplayListProps> = ({
                       </div>
                     </div>
                   </div>
-                  <ChevronRight className="h-5 w-5 text-muted-foreground group-hover:text-primary transition-colors flex-shrink-0 hidden sm:block" />
+                  <ChevronRight className="h-5 w-5 text-muted-foreground transition-colors flex-shrink-0 hidden sm:block" />
                 </div>
               </CardHeader>
 

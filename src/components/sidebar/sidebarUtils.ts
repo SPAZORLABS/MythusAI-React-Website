@@ -1,7 +1,6 @@
 // Utility functions for sidebar components
 
 export const truncateTitle = (title: string, maxLength: number = 25): string => {
-  console.log(title)
   if (title.length <= maxLength) return title;
   const name = title;
   return name.length > maxLength ? `${name.substring(0, maxLength)}...` : name;

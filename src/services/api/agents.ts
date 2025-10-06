@@ -1,5 +1,7 @@
 import axiosClient from '@/api/axiosClient';
 import { promises } from 'dns';
+import { getLLMSettings } from '@/utils/storage';
+import { getApiKey } from '@/utils/storage';
 
 export interface SummarizeResponse {
   success: boolean;
@@ -58,9 +60,9 @@ function mapUseCase(screenplayCall: boolean): 'screenplay' | 'scene' {
 }
 
 async function buildLLMConfigFor(useCase: 'screenplay' | 'scene' | 'chat') {
-  const settings = await window.settings.getLLMSettings();
+  const settings = await getLLMSettings();
   const cfg = settings[useCase];
-  const apiKey = await window.secrets.getApiKey(cfg.provider);
+  const apiKey = getApiKey(cfg.provider);
   return {
     provider: cfg.provider,
     model_name: cfg.model_name,

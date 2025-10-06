@@ -1,4 +1,4 @@
-export interface ElectronAPI {
+export interface WebAPI {
   auth: {
     login: () => Promise<void>;
     logout: () => Promise<void>;
@@ -10,19 +10,17 @@ export interface ElectronAPI {
     onAuthStatus: (callback: (data: any) => void) => void;
     onNavigate: (callback: (path: string) => void) => void;
   };
+  backend: {
+    check: () => Promise<any>;
+    getUrl: () => Promise<string>;
+    onStatus: (callback: (status: any) => void) => void;
+    onError: (callback: (error: string) => void) => void;
+  };
 }
 
 declare global {
   interface Window {
-    electron: ElectronAPI;
-    settings: {
-      getLLMSettings: () => Promise<LLMSettings>;
-      setLLMSettings: (next: Partial<LLMSettings>) => Promise<LLMSettings>;
-    };
-    secrets: {
-      setApiKey: (provider: 'openai' | 'gemini', apiKey: string) => Promise<boolean>;
-      getApiKey: (provider: 'openai' | 'gemini') => Promise<string | null>;
-    };
+    electron?: ElectronAPI;
   }
 }
 

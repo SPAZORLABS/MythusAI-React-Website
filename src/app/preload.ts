@@ -1,4 +1,3 @@
-import { LLMSettings } from '@/types/electron';
 import { contextBridge, ipcRenderer } from 'electron';
 
 contextBridge.exposeInMainWorld('electron', {
@@ -8,7 +7,7 @@ contextBridge.exposeInMainWorld('electron', {
     logout: () => ipcRenderer.invoke('auth:logout'),
     check: () => ipcRenderer.invoke('auth:check'),
     getToken: () => ipcRenderer.invoke('auth:getToken'),
-    
+
     onAuthSuccess: (callback: (data: any) => void) => {
       ipcRenderer.on('auth-success', (_, data) => callback(data));
     },
@@ -25,28 +24,18 @@ contextBridge.exposeInMainWorld('electron', {
       ipcRenderer.on('navigate', (_, path) => callback(path));
     },
   },
-  
+
   // ✅ Backend methods
   backend: {
     check: () => ipcRenderer.invoke('backend:check'),
     getUrl: () => ipcRenderer.invoke('backend:url'),
-    
+
     onStatus: (callback: (status: any) => void) => {
       ipcRenderer.on('backend-status', (_, status) => callback(status));
     },
-    
+
     onError: (callback: (error: string) => void) => {
       ipcRenderer.on('backend-error', (_, error) => callback(error));
     },
   },
-});
-
-contextBridge.exposeInMainWorld('settings', {
-  getLLMSettings: () => ipcRenderer.invoke('settings:getLLMSettings'),
-  setLLMSettings: (next: Partial<LLMSettings>) => ipcRenderer.invoke('settings:setLLMSettings', next),
-});
-
-contextBridge.exposeInMainWorld('secrets', {
-  setApiKey: (provider: 'openai' | 'gemini', apiKey: string) => ipcRenderer.invoke('secrets:setApiKey', provider, apiKey),
-  getApiKey: (provider: 'openai' | 'gemini') => ipcRenderer.invoke('secrets:getApiKey', provider),
 });
