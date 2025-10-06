@@ -9,7 +9,7 @@ import { data } from 'react-router-dom';
 
 export const CallSheetRoot = forwardRef<HTMLDivElement, { screenplay_id: string }>(({ screenplay_id }, ref) => {
   return (
-    <div ref={ref} className="w-full max-w-4xl mx-auto bg-white font-mono text-xs p-2 space-y-0 ">
+    <div ref={ref} className="w-full max-w-4xl mx-auto  font-mono text-xs p-2 space-y-0 bg-white text-black">
       {/* Header */}
       <div className="border border-black">
         <div className="text-center font-bold text-sm p-2 border-b border-black">

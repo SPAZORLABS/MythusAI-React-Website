@@ -47,7 +47,7 @@ const CallSheetContent: React.FC<{
       />
       
       <div className="flex-1 overflow-auto">
-        <div className="relative min-h-full bg-gray-100">
+        <div className="relative min-h-full">
           <Toolbar callSheetRef={callSheetRef} />
           <div className="p-4">
             <CallSheetRoot ref={callSheetRef} screenplay_id={selectedScreenplay?.id || ''} />
